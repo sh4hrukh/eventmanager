@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const passport = require("passport");
 const users = require("./routes/api/users");
 const events= require("./routes/api/events");
+const path = require("path")
 const app = express();
 // Bodyparser middleware
 app.use(
@@ -24,10 +25,15 @@ mongoose
   .catch(err => console.log(err));
 // Passport middleware
 app.use(passport.initialize());
+app.use(express.static(path.join(__dirname, "client", "build")))
 // Passport config
 require("./config/passport")(passport);
 // Routes
 app.use("/api/users", users);
 app.use("/api/events", events);
 const port = process.env.PORT || 5000;
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+});
 app.listen(port, () => console.log(`Server up and running on port ${port} !`));
