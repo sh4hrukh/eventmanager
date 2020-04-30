@@ -62,12 +62,12 @@ const newEvent = {
       title: this.state.title,
       description: this.state.description,
       date: date,
-      user: user.id,
-      id: this.props.location.event._id
+      user: user.id
     };
     if(this.props.location.event)
     {
-      this.props.updateEvent(newEvent,this.props.history);
+      this.props.updateEvent({...newEvent,
+        id: this.props.location.event._id},this.props.history);
     }
     else
       this.props.addEvent(newEvent,this.props.history);
