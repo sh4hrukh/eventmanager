@@ -17,6 +17,17 @@ const UserSchema = new Schema({
   date: {
     type: Date,
     default: Date.now
-  }
+  },
+  subscription:{
+    type:{
+    endpoint: String,
+    keys: Schema.Types.Mixed,
+    createDate: {
+        type: Date,
+        default: Date.now
+    },
+    default: null
+ }
+}                           
 });
 module.exports = User = mongoose.model("users", UserSchema);

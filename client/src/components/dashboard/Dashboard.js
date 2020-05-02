@@ -6,9 +6,16 @@ import EventList from "./EventList";
 import EventForm from "./EventForm";
 import ViewEvent from "./ViewEvent";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-
+import {subscribeUser} from "../../subscription"
 
 class Dashboard extends Component {
+  componentDidMount(){
+    const { user } = this.props.auth;
+    console.log(user);
+    subscribeUser(user.id);
+  }
+
+
   onLogoutClick = e => {
     e.preventDefault();
     this.props.logoutUser();

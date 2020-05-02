@@ -48,7 +48,7 @@ class EventList extends Component {
         </div>
         <div className="card-action">
         <Link
-    to={{pathname:"/dashboard/view",event: x}}
+    to={{pathname:"/dashboard/view",event: x,getPrintableDate}}
     /*style={{
       width: "140px",
       borderRadius: "3px",

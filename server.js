@@ -6,6 +6,15 @@ const users = require("./routes/api/users");
 const events= require("./routes/api/events");
 const path = require("path")
 const app = express();
+const dotenv=require('dotenv');
+const cors=require('cors');
+const webpush=require('web-push');
+const User= require("./models/User");
+dotenv.config()
+webpush.setVapidDetails(process.env.WEB_PUSH_CONTACT, process.env.PUBLIC_VAPID_KEY, process.env.PRIVATE_VAPID_KEY)
+
+app.use(cors())
+
 // Bodyparser middleware
 app.use(
   bodyParser.urlencoded({
@@ -31,6 +40,20 @@ require("./config/passport")(passport);
 // Routes
 app.use("/api/users", users);
 app.use("/api/events", events);
+
+
+app.post('/notifications/subscribe', (req, res) => {
+User.findById(req.body.userid)
+      .then(user => {
+        user.subscription=req.body.subscription;
+        user.save()
+          .then(() => res.json('Event updated!'))
+          .catch(err => res.status(400).json('Error: ' + err));
+      })
+      .catch(err => res.status(400).json('Error: ' + err));
+
+});
+
 const port = process.env.PORT || 5000;
 
 app.get("*", (req, res) => {

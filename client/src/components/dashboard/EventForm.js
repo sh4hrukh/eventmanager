@@ -29,7 +29,8 @@ class EventForm extends Component {
     M.Timepicker.init(elems, {
       onSelect: (hour,mins)=>{
         context.setState({time: {hour,mins}});
-      }
+      },
+      twelveHour: false
 
     });
     let event=this.props.location.event;
@@ -58,11 +59,13 @@ onSubmit = e =>{
 let date = this.state.date;
 date.setHours(this.state.time.hour);
 date.setMinutes(this.state.time.mins);
+console.log(this.state.time.hour);
 const newEvent = {
       title: this.state.title,
       description: this.state.description,
       date: date,
-      user: user.id
+      user: user.id,
+      current: new Date()
     };
     if(this.props.location.event)
     {

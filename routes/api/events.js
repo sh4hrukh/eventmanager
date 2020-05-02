@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
 
+const webpush=require('web-push');
 const Event = require("../../models/Event");
-const User= require("../../models/User");
+const moment= require('moment');
 
 router.route('/:id').get((req, res) => {
 
@@ -17,10 +18,39 @@ router.route('/:id').get((req, res) => {
     const date = req.body.date;
     const user=req.body.user;
     const newEvent = new Event({title,description,date,user});
-  
+    const difference=  moment(req.body.current).diff(new Date());
     newEvent.save()
       .then(() => res.json('Event added!'))
       .catch(err => res.status(400).json('Error: ' + err));
+
+    User.findById(user)
+      .then(user => {
+        if(user.subscription)
+        {
+          var schedule = require('node-schedule');
+          console.log(new Date());
+          console.log(moment.utc(date).utcOffset(330).toDate());
+          schedule.scheduleJob('task', moment.utc(date).utcOffset(330).toDate(), function(subscription,title,desc)
+          {
+            const payload = JSON.stringify({
+              "title": title,
+              "body": desc
+            });
+          
+            webpush.sendNotification(subscription, payload)
+              .then(result => console.log(result))
+              .catch(e => console.log(e.stack))
+
+              //res.status(200).json({'success': true})
+          
+          }.bind(null, user.subscription,title,description));
+          
+        }
+      })
+      .catch(err => res.status(400).json('Error: ' + err));
+
+  
+
   });
 
   router.route('/:id').delete((req, res) => {
