@@ -20,7 +20,7 @@ class EventForm extends Component {
 
     var context=this;
     var elems = document.querySelectorAll('.datepicker');
-    var instances=M.Datepicker.init(elems, {
+    M.Datepicker.init(elems, {
       onSelect: date=>{
         context.setState({date});
       }

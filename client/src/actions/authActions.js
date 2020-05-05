@@ -8,6 +8,23 @@ import {
   SET_EVENTS
 } from "./types";
 
+export const sendSubscription = (subscription,userid) => dispatch => {
+  /*return fetch(`/notifications/subscribe`, {
+    method: 'POST',
+    body: JSON.stringify({subscription,userid}),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })*/
+
+  axios
+    .post("/notifications/subscribe", {subscription,userid})
+    .then(res => console.log(res)) // re-direct to dashboard
+    .catch(err =>console.log(err)
+    );
+
+}
+
 export const getEvents = userid => dispatch => {
   axios
     .get("/api/events/"+userid)

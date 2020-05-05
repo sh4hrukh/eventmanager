@@ -1,4 +1,6 @@
 
+import { sendSubscription } from "./actions/authActions";
+
 const convertedVapidKey = urlBase64ToUint8Array(process.env.REACT_APP_PUBLIC_VAPID_KEY)
 
 function urlBase64ToUint8Array(base64String) {
@@ -15,15 +17,7 @@ function urlBase64ToUint8Array(base64String) {
   return outputArray
 }
 
-function sendSubscription(subscription,userid) {
-  return fetch(`${process.env.REACT_APP_API_URL}/notifications/subscribe`, {
-    method: 'POST',
-    body: JSON.stringify({subscription,userid}),
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  })
-}
+
 
 export function subscribeUser(userid) {
   if ('serviceWorker' in navigator) {

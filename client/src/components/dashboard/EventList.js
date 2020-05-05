@@ -46,30 +46,21 @@ class EventList extends Component {
           <p>{ getPrintableDate(x.date)}</p>
           <p>{x.description}</p>
         </div>
-        <div className="card-action">
+        <div className="card-action center" style={{padding:0}}>
         <Link
     to={{pathname:"/dashboard/view",event: x,getPrintableDate}}
-    /*style={{
-      width: "140px",
-      borderRadius: "3px",
-      letterSpacing: "1.5px"
-    }}*/
-    className="btn btn-large waves-effect waves-light hoverable blue accent-3"
+    className="btn btn-small waves-effect waves-light hoverable blue accent-3"
   >
     View
   </Link>
           <Link
     to={{pathname:"/dashboard/add",event: x}}
-    /*style={{
-      width: "140px",
-      borderRadius: "3px",
-      letterSpacing: "1.5px"
-    }}*/
-    className="btn btn-large waves-effect waves-light hoverable blue accent-3"
+    className="btn btn-small waves-effect waves-light hoverable blue accent-3"
   >
     Edit
   </Link>
-          <button onClick={()=>this.props.deleteEvent(x._id,this.props.history)}>Delete</button>
+          <button className="btn btn-small waves-effect waves-light hoverable blue accent-3"
+          onClick={()=>this.props.deleteEvent(x._id,this.props.history)}>Delete</button>
         </div>
       </div>
     </div>
