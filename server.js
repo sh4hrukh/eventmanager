@@ -39,7 +39,7 @@ app.use(express.static(path.join(__dirname, "client", "build")))
 require("./config/passport")(passport);
 // Routes
 app.use("/api/users", users);
-app.use("/api/events", events);
+app.use("/api/events",passport.authenticate('jwt', {session: false}), events);
 
 
 app.post('/notifications/subscribe', (req, res) => {
